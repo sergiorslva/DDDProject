@@ -17,10 +17,36 @@ namespace DDDProject.Service.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public IEnumerable<CalendarDTO> Get()
+        [HttpPost]
+        public async Task<IActionResult> Post([FromForm] CalendarDTO calendarDTO)
         {
-            return _calendarApp.GetAll();
+            return Ok(await _calendarApp.AddAsync(calendarDTO));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put([FromForm] CalendarDTO calendarDTO)
+        {
+            return Ok(await _calendarApp.UpdateAsync(calendarDTO));
+        }
+
+        [HttpDelete]
+        [Route("id")]
+        public async Task<IActionResult> Put([FromQuery] int id)
+        {
+            return Ok(await _calendarApp.DeleteAsync(id));
+        }
+
+        [HttpGet]
+        [Route("id")]
+        public async Task<IActionResult> GetById([FromQuery] int id)
+        {
+            return Ok(await _calendarApp.GetByIdAsync(id));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(await _calendarApp.GetAllAsync());
         }
     }
 }

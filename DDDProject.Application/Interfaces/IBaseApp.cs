@@ -7,10 +7,10 @@ namespace DDDProject.Application.Interfaces
         where TEntity : BaseEntity
         where TEntityDTO: BaseDTO
     {
-        Task Add(TEntityDTO entity);
-        Task Delete(int id);
-        Task Update(TEntityDTO entity);
-        TEntityDTO GetById(int id);
-        IEnumerable<TEntityDTO> GetAll();
+        Task<int> AddAsync(TEntityDTO entity);
+        Task<int> DeleteAsync(int id);
+        Task<int> UpdateAsync(TEntityDTO entity);
+        Task<TEntityDTO> GetByIdAsync(int id);
+        Task<IEnumerable<TEntityDTO>> GetAllAsync();
     }
 }

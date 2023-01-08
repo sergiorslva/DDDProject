@@ -13,29 +13,29 @@ namespace DDDProject.Domain.Services
             _baseRepository = baseRepository;
         }
 
-        public Task Add(TEntity entity)
+        public async Task<int> AddAsync(TEntity entity)
         {
-            return _baseRepository.Add(entity);
+            return await _baseRepository.AddAsync(entity);
         }
 
-        public Task Delete(int id)
+        public async Task<int> DeleteAsync(int id)
         {
-            return _baseRepository.Delete(id);
+            return await _baseRepository.DeleteAsync(id);
         }
 
-        public Task<IEnumerable<TEntity>> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return _baseRepository.GetAll();
+            return await _baseRepository.GetAllAsync();
         }
 
-        public Task<TEntity> GetById(int id)
+        public async Task<TEntity> GetByIdAsync(int id)
         {
-            return _baseRepository.GetById(id);
+            return await _baseRepository.GetByIdAsync(id);
         }
 
-        public Task Update(TEntity entity)
+        public async Task<int> UpdateAsync(TEntity entity)
         {
-            return _baseRepository.Update(entity);
+            return await _baseRepository.UpdateAsync(entity);
         }
     }
 }

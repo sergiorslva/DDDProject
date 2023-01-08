@@ -6,29 +6,48 @@ namespace DDDProject.Infra.Data.Repositories
     public class BaseRepository<TEntity> : IBaseRepository<TEntity>
         where TEntity : BaseEntity
     {
-        public Task Add(TEntity entity)
+        private readonly DDDPRojectContext _dDDPRojectContext;
+
+        public BaseRepository(DDDPRojectContext dDDPRojectContext)
         {
-            throw new NotImplementedException();
+            _dDDPRojectContext = dDDPRojectContext;
         }
 
-        public Task Delete(int id)
+        public async Task<int> AddAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            _dDDPRojectContext.Set<TEntity>().Add(entity);
+            return await _dDDPRojectContext.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<TEntity>> GetAll()
+        public async Task<int> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = _dDDPRojectContext.Set<TEntity>().Find(id);
+
+            if(entity != null)
+            {
+                _dDDPRojectContext.Set<TEntity>().Remove(entity);
+                return await _dDDPRojectContext.SaveChangesAsync();
+            }            
+
+            return await Task.FromResult(0);
         }
 
-        public Task<TEntity> GetById(int id)
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var entities = _dDDPRojectContext.Set<TEntity>().ToList();
+            return await Task.FromResult(entities);
+
         }
 
-        public Task Update(TEntity entity)
+        public async Task<TEntity> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _dDDPRojectContext.Set<TEntity>().FindAsync(id);            
+        }
+
+        public async Task<int> UpdateAsync(TEntity entity)
+        {
+            _dDDPRojectContext.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            return await _dDDPRojectContext.SaveChangesAsync();
         }
     }
 }

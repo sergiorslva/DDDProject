@@ -8,8 +8,7 @@ namespace DDDProject.Application.Mapper
     {
         public EntityMapper()
         {
-            CreateMap<Calendar, CalendarDTO>();
-            CreateMap<CalendarDTO, Calendar>();
+            CreateMap<Calendar, CalendarDTO>().ReverseMap();
         }
     }
 }

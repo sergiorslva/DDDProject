@@ -1,11 +1,24 @@
+using AutoMapper;
 using DDDProject.Application.Mapper;
+using DDDProject.Infra.Data.Repositories;
 using DDDProject.Infra.IoC;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 DependencyInjector.Register(builder.Services);
-builder.Services.AddAutoMapper(x => x.AddProfile(new EntityMapper()));
+
+builder.Services.AddAutoMapper(config =>
+{
+    config.AddProfile(new EntityMapper());
+});
+
+builder.Services.AddDbContext<DDDPRojectContext>(options =>
+{    
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"));
+});
 
 
 builder.Services.AddControllers();
